@@ -33,13 +33,13 @@ function buildCharts(i){
   if(planActualChart) planActualChart.destroy();
   planActualChart=new Chart($("#planActualChart"),{type:"line",data:{labels,datasets:[
     {label:"แผนสะสมเฉลี่ย (%)",data:plans,borderColor:"#c5a058",backgroundColor:"#c5a05818",borderDash:[6,4],pointRadius:2,tension:.25},
-    {label:"ผลสะสมเฉลี่ย (%)",data:actuals,borderColor:"#28735a",backgroundColor:"#28735a16",fill:true,pointRadius:3,tension:.25}
+    {label:"ผลสะสมเฉลี่ย (%)",data:actuals,borderColor:"#2f80c9",backgroundColor:"#2f80c916",fill:true,pointRadius:3,tension:.25}
   ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{position:"bottom"}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+"%"}}}}});
 
   const ps=availableProjects(i), counts={green:0,amber:0,red:0};
   ps.forEach(p=>{const s=statusFor(actualAt(p,i),planAt(p,i)); if(counts[s.key]!==undefined) counts[s.key]++});
   if(statusChart) statusChart.destroy();
-  statusChart=new Chart($("#statusChart"),{type:"doughnut",data:{labels:["ปกติ","เฝ้าระวัง","ล่าช้า"],datasets:[{data:[counts.green,counts.amber,counts.red],backgroundColor:["#28735a","#c48a2b","#b64a42"],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:"68%",plugins:{legend:{display:false}}}});
+  statusChart=new Chart($("#statusChart"),{type:"doughnut",data:{labels:["ปกติ","เฝ้าระวัง","ล่าช้า"],datasets:[{data:[counts.green,counts.amber,counts.red],backgroundColor:["#2f80c9","#c8a44d","#c84444"],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:"68%",plugins:{legend:{display:false}}}});
 }
 
 function renderKpis(i){
