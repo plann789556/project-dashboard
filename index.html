@@ -1,1 +1,70 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard รายงานสถานะ ปีงบประมาณ 2569</title><script src="https://cdn.jsdelivr.net/npm/chart.js"></script><link rel="stylesheet" href="style.css"></head><body><header><div><div class="eyebrow">กรมธนารักษ์ • PROJECT MONITORING</div><h1>Dashboard รายงานสถานะแผนงาน/โครงการ</h1><p>ปีงบประมาณ 2569 · ข้อมูลล่าสุด สิงหาคม 2569</p></div></header><main><section class="cards"><article><span>โครงการทั้งหมด</span><b id="total"></b><small>โครงการ</small></article><article><span>แล้วเสร็จ</span><b id="done"></b><small>โครงการ</small></article><article><span>เป็นไปตามแผน</span><b id="onplan"></b><small>โครงการ</small></article><article class="gold"><span>ความก้าวหน้าเฉลี่ย</span><b id="avg"></b><small>%</small></article></section><section class="grid"><div class="panel"><h2>ภาพรวมสถานะ</h2><div class="chartbox"><canvas id="statusChart"></canvas></div></div><div class="panel"><h2>แนวโน้มความก้าวหน้าเฉลี่ย</h2><div class="chartbox"><canvas id="trendChart"></canvas></div></div></section><section class="panel"><div class="toolbar"><div><h2>สถานะรายโครงการ</h2><p>ค้นหาชื่อโครงการหรือกรองตามสถานะ</p></div><div><input id="search" placeholder="ค้นหาโครงการ…"><select id="filter"><option value="">ทุกสถานะ</option><option>แล้วเสร็จ</option><option>เป็นไปตามแผน</option></select></div></div><div id="projects"></div></section><footer>ข้อมูลจาก Dashboard_รายงานสถานะ_งบ2569.xlsx</footer></main><script src="data.js"></script><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard V2 รายงานสถานะแผนงาน/โครงการ</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">กรมธนารักษ์ • PROJECT MONITORING V2</div>
+      <h1>Dashboard รายงานสถานะแผนงาน/โครงการ</h1>
+      <p id="subtitle">ปีงบประมาณ 2569</p>
+    </div>
+    <div class="selectors" aria-label="ตัวกรองช่วงเวลา">
+      <label>ปีงบประมาณ<select id="yearSelect"><option value="2569">2569</option></select></label>
+      <label>เดือนรายงาน<select id="monthSelect"></select></label>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="kpis" aria-label="ตัวชี้วัดสรุป">
+    <article class="kpi"><span>โครงการทั้งหมด</span><strong id="kpiTotal">–</strong><small>โครงการ</small></article>
+    <article class="kpi"><span>แผนสะสมเฉลี่ย</span><strong id="kpiPlan">–</strong><small>%</small></article>
+    <article class="kpi"><span>ผลสะสมเฉลี่ย</span><strong id="kpiActual">–</strong><small>%</small></article>
+    <article class="kpi" id="varianceCard"><span>ผลเทียบแผน</span><strong id="kpiVariance">–</strong><small>จุดร้อยละ</small></article>
+  </section>
+
+  <section class="status-strip">
+    <div class="status-card green"><span>ปกติ</span><b id="greenCount">0</b><small>ผล ≥ แผน - 5</small></div>
+    <div class="status-card amber"><span>เฝ้าระวัง</span><b id="amberCount">0</b><small>ช้ากว่าแผน 5–15</small></div>
+    <div class="status-card red"><span>ล่าช้า</span><b id="redCount">0</b><small>ช้ากว่าแผน &gt; 15</small></div>
+    <div class="status-card neutral"><span>แล้วเสร็จ</span><b id="doneCount">0</b><small>ผล = 100%</small></div>
+  </section>
+
+  <section class="overview-grid">
+    <article class="panel">
+      <div class="panel-head"><div><h2>ผลเทียบแผนรายเดือน</h2><p>ค่าเฉลี่ยสะสมของโครงการที่มีข้อมูล</p></div><span class="month-chip" id="chartMonthChip"></span></div>
+      <div class="chartbox"><canvas id="planActualChart"></canvas></div>
+    </article>
+    <article class="panel">
+      <div class="panel-head"><div><h2>สถานะ ณ เดือนที่เลือก</h2><p>ประเมินจากส่วนต่างระหว่างผลกับแผน</p></div></div>
+      <div class="donut-wrap"><canvas id="statusChart"></canvas></div>
+      <div class="legend-note"><span class="dot green-dot"></span>ปกติ <span class="dot amber-dot"></span>เฝ้าระวัง <span class="dot red-dot"></span>ล่าช้า</div>
+    </article>
+  </section>
+
+  <section class="panel projects-panel">
+    <div class="panel-head project-head">
+      <div><h2>รายละเอียดรายโครงการ</h2><p>กดที่โครงการเพื่อดูความก้าวหน้ารายเดือน แผน ผล และส่วนต่าง</p></div>
+      <div class="filters"><input id="searchInput" placeholder="ค้นหาโครงการหรือหน่วยงาน…"><select id="statusFilter"><option value="">ทุกสถานะ</option><option value="green">ปกติ</option><option value="amber">เฝ้าระวัง</option><option value="red">ล่าช้า</option></select></div>
+    </div>
+    <div class="table-head"><span>โครงการ</span><span>แผน</span><span>ผล</span><span>ส่วนต่าง</span><span>สถานะ</span><span></span></div>
+    <div id="projectList"></div>
+  </section>
+
+  <section class="method-note">
+    <strong>เกณฑ์สถานะ:</strong> สีเขียว = ผลไม่น้อยกว่าแผนเกิน 5 จุดร้อยละ, สีทอง = ต่ำกว่าแผนมากกว่า 5 ถึง 15 จุดร้อยละ, สีแดง = ต่ำกว่าแผนมากกว่า 15 จุดร้อยละ<br>
+    <span id="planNote"></span>
+  </section>
+  <footer id="footerSource"></footer>
+</main>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
