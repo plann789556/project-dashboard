@@ -1,9 +1,9 @@
-const dashboardData = {
+window.DASHBOARD_DATA = {
   meta: {
     title: "Dashboard รายงานสถานะแผนงาน/โครงการ",
     fiscalYear: "2569",
     latestMonthIndex: 10,
-    source: "Dashboard_รายงานสถานะ_งบ2569.xlsx",
+    source: "Dashboard_รายงานสถานะ_งบ2569.xlsx"
   },
   months: ["ต.ค.68","พ.ย.68","ธ.ค.68","ม.ค.69","ก.พ.69","มี.ค.69","เม.ย.69","พ.ค.69","มิ.ย.69","ก.ค.69","ส.ค.69","ก.ย.69"],
   projects: [

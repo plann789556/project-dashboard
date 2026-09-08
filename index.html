@@ -1,7 +1,58 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard รายงานสถานะแผนงาน/โครงการ</title><script src="https://cdn.jsdelivr.net/npm/chart.js"></script><link rel="stylesheet" href="style.css"></head><body>
-<header class="hero"><div class="hero-inner"><div><div class="eyebrow">กรมธนารักษ์ • PROJECT MONITORING</div><h1>Dashboard รายงานสถานะแผนงาน/โครงการ</h1><p id="subtitle">ปีงบประมาณ 2569</p></div><div class="selectors"><label>ปีงบประมาณ<select id="yearSelect"><option value="2569">2569</option></select></label><label>เดือนรายงาน<select id="monthSelect"></select></label></div></div></header>
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard รายงานสถานะแผนงาน/โครงการ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">กรมธนารักษ์ • PROJECT MONITORING</div>
+      <h1>Dashboard รายงานสถานะแผนงาน/โครงการ</h1>
+      <p id="subtitle">ปีงบประมาณ 2569</p>
+    </div>
+    <div class="selectors">
+      <label>ปีงบประมาณ<select id="yearSelect"><option value="2569">2569</option></select></label>
+      <label>เดือนรายงาน<select id="monthSelect"></select></label>
+    </div>
+  </div>
+</header>
 <main>
-<section class="kpis"><article class="kpi"><span>โครงการทั้งหมด</span><strong id="kpiTotal">–</strong><small>โครงการ</small></article><article class="kpi"><span>แล้วเสร็จ</span><strong id="kpiDone">–</strong><small>โครงการ</small></article><article class="kpi"><span>อยู่ระหว่างดำเนินการ</span><strong id="kpiOngoing">–</strong><small>โครงการ</small></article><article class="kpi"><span>ความก้าวหน้าเฉลี่ย</span><strong id="kpiActual">–</strong><small>%</small></article></section>
-<section class="overview-grid"><article class="panel"><div class="panel-head"><div><h2>แนวโน้มความก้าวหน้าเฉลี่ย</h2><p>ค่าเฉลี่ยผลการดำเนินงานสะสมของโครงการที่มีข้อมูล</p></div><span class="month-chip" id="chartMonthChip"></span></div><div class="chartbox"><canvas id="actualChart"></canvas></div></article><article class="panel"><div class="panel-head"><div><h2>สถานะ ณ เดือนที่เลือก</h2><p>จำแนกตามผลความก้าวหน้า 100% หรือยังไม่ครบ 100%</p></div></div><div class="donut-wrap"><canvas id="statusChart"></canvas></div><div class="legend-note"><span class="dot" style="background:#2f80c9"></span>แล้วเสร็จ <span class="dot" style="background:#c84444"></span>อยู่ระหว่างดำเนินการ</div></article></section>
-<section class="panel projects-panel"><div class="panel-head project-head"><div><h2>รายละเอียดรายโครงการ</h2><p>กดที่โครงการเพื่อดูผลความก้าวหน้ารายเดือน</p></div><div class="filters"><input id="searchInput" placeholder="ค้นหาโครงการหรือหน่วยงาน…"><select id="statusFilter"><option value="">ทุกสถานะ</option><option value="done">แล้วเสร็จ</option><option value="ongoing">อยู่ระหว่างดำเนินการ</option></select></div></div><div class="table-head" style="grid-template-columns:1fr 120px 180px 32px"><span>โครงการ</span><span>ผล</span><span>สถานะ</span><span></span></div><div id="projectList"></div></section>
-<section class="method-note"><strong>หมายเหตุ:</strong> Dashboard แสดงเฉพาะผลความก้าวหน้าที่มีอยู่ในข้อมูลต้นทาง โดยตัดค่าแผนและผลเทียบแผนที่ไม่ได้มาจากข้อมูลจริงออกแล้ว</section><footer id="footerSource"></footer></main><script src="data.js"></script><script src="script.js"></script></body></html>
+  <section class="kpis">
+    <article class="kpi"><span>โครงการทั้งหมด</span><strong id="kpiTotal">–</strong><small>โครงการ</small></article>
+    <article class="kpi"><span>แล้วเสร็จ</span><strong id="kpiDone">–</strong><small>โครงการ</small></article>
+    <article class="kpi"><span>อยู่ระหว่างดำเนินการ</span><strong id="kpiOngoing">–</strong><small>โครงการ</small></article>
+    <article class="kpi"><span>ความก้าวหน้าเฉลี่ย</span><strong id="kpiActual">–</strong><small>%</small></article>
+  </section>
+
+  <section class="overview-grid">
+    <article class="panel">
+      <div class="panel-head"><div><h2>แนวโน้มความก้าวหน้าเฉลี่ย</h2><p>ค่าเฉลี่ยผลการดำเนินงานสะสมของโครงการที่มีข้อมูล</p></div><span class="month-chip" id="chartMonthChip"></span></div>
+      <div class="chartbox" id="actualChart"></div>
+    </article>
+    <article class="panel">
+      <div class="panel-head"><div><h2>สถานะ ณ เดือนที่เลือก</h2><p>จำแนกตามผลความก้าวหน้า 100% หรือยังไม่ครบ 100%</p></div></div>
+      <div class="donut-wrap"><div id="statusDonut" class="donut"><div class="donut-center"><strong id="donutTotal">0</strong><span>โครงการ</span></div></div></div>
+      <div class="legend-note"><span class="dot blue"></span>แล้วเสร็จ <span class="dot red"></span>อยู่ระหว่างดำเนินการ</div>
+    </article>
+  </section>
+
+  <section class="panel projects-panel">
+    <div class="panel-head project-head">
+      <div><h2>รายละเอียดรายโครงการ</h2><p>กดที่โครงการเพื่อดูผลความก้าวหน้ารายเดือน</p></div>
+      <div class="filters"><input id="searchInput" placeholder="ค้นหาโครงการหรือหน่วยงาน…"><select id="statusFilter"><option value="">ทุกสถานะ</option><option value="done">แล้วเสร็จ</option><option value="ongoing">อยู่ระหว่างดำเนินการ</option></select></div>
+    </div>
+    <div class="table-head"><span>โครงการ</span><span>ผล</span><span>สถานะ</span><span></span></div>
+    <div id="projectList"></div>
+  </section>
+
+  <section class="method-note"><strong>หมายเหตุ:</strong> Dashboard แสดงเฉพาะผลความก้าวหน้าที่มีอยู่ในข้อมูลต้นทาง โดยไม่ใช้ค่าแผนหรือผลเทียบแผนที่ไม่ได้มาจากข้อมูลจริง</section>
+  <footer id="footerSource"></footer>
+</main>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
